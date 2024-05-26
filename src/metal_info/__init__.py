@@ -4,6 +4,8 @@ try:
         physical_memory,
         current_allocated_size,
     )
+
+    __all__ = ["recommended_max_vram", "physical_memory", "current_allocated_size"]
 except ImportError as e:
     if "undefined symbol" in str(e):
         raise ImportError(
