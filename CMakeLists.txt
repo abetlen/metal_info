@@ -55,5 +55,17 @@ nanobind_add_module(
   src/metal_info_ext.cpp
 )
 
+find_library(FOUNDATION_LIBRARY Foundation REQUIRED)
+find_library(METAL_FRAMEWORK    Metal      REQUIRED)
+find_library(METALKIT_FRAMEWORK MetalKit   REQUIRED)
+
+message(STATUS "Metal framework found")
+
+add_library(metal_info OBJECT src/metal_info.m)
+target_link_libraries(metal_info PRIVATE ${FOUNDATION_LIBRARY} ${METAL_FRAMEWORK} ${METALKIT_FRAMEWORK})
+
+# Link metal_info to metal_info_ext
+target_link_libraries(metal_info_ext PRIVATE metal_info)
+
 # Install directive for scikit-build-core
 install(TARGETS metal_info_ext LIBRARY DESTINATION metal_info)
